@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sukoon | Peace of the heart</title>
+<style>
+:root{--bg:#f7f1e3;--bg2:#e6efe3;--ink:#1d2b24;--mute:#58695f;--card:#fffdf6;--line:#d9d2bb;--green:#1d6b4f;--gold:#b98a1d;--onG:#fff;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1914;--bg2:#12251d;--ink:#f1ead6;--mute:#a9bbb0;--card:#17291f;--line:#2c4437;--green:#4fc59a;--gold:#e6bd55;--onG:#08150f;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0d1914;--bg2:#12251d;--ink:#f1ead6;--mute:#a9bbb0;--card:#17291f;--line:#2c4437;--green:#4fc59a;--gold:#e6bd55;--onG:#08150f;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:radial-gradient(circle at 20% 0,var(--bg2),var(--bg) 60%);color:var(--ink);font:17px/1.6 "Segoe UI",system-ui,sans-serif;display:flex;flex-direction:column;overflow:hidden}
+.ar{font-family:"Amiri","Scheherazade New","Noto Naskh Arabic","Traditional Arabic",serif;direction:rtl;font-size:1.9rem;line-height:2.1;color:var(--gold);margin:8px 0}
+.ur{font-family:"Noto Nastaliq Urdu","Jameel Noori Nastaleeq","Urdu Typesetting","Segoe UI",serif;direction:rtl;font-size:1.2rem;line-height:2.3;color:var(--ink);margin:8px 0}
+h1,h2{font-family:Georgia,"Times New Roman",serif;margin:0}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+header{display:flex;justify-content:space-between;align-items:center;padding:10px 18px;gap:10px}
+.logo{font:700 1.3rem Georgia,serif;color:var(--green)}
+#dots{display:flex;gap:6px}
+#dots button{width:10px;height:10px;border-radius:50%;border:0;padding:0;background:var(--line);cursor:pointer}
+#dots button.on{background:var(--gold);transform:scale(1.3)}
+.bar{height:3px;background:var(--line)}#prog{height:100%;background:var(--green);width:0;transition:width .5s}
+#stage{flex:1;position:relative;perspective:1400px;min-height:0;touch-action:pan-y}
+.pg{position:absolute;inset:0;overflow-y:auto;padding:22px 18px 28px;opacity:0;pointer-events:none;transform:translateX(100%) rotateY(-55deg);transition:transform .8s cubic-bezier(.25,.8,.25,1),opacity .6s}
+body:not(.ready) .pg:first-child{opacity:1;pointer-events:auto;transform:none}
+.pg.cur{opacity:1;pointer-events:auto;transform:none}.pg.prev{transform:translateX(-100%) rotateY(55deg)}
+.in{max-width:620px;margin:0 auto}
+h2{font-size:clamp(1.7rem,5vw,2.3rem);color:var(--green);margin-bottom:6px}
+.sub{color:var(--mute);margin:0 0 18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:24px;box-shadow:0 14px 34px rgba(0,0,0,.12);text-align:center}
+.card .ref{color:var(--mute);font-size:.9rem;margin-top:10px}
+.card .tr{font-style:italic;color:var(--mute);margin:0}
+.card p{margin:8px 0}
+.nv{display:flex;justify-content:center;align-items:center;gap:16px;margin-top:14px;color:var(--mute)}
+.btn,.nv button,.mood button{font:inherit;font-weight:600;border-radius:999px;cursor:pointer}
+.btn{background:var(--green);color:var(--onG);border:0;padding:11px 24px}
+.btn.alt{background:transparent;color:var(--ink);border:2px solid var(--line)}
+.nv button{width:44px;height:44px;border:2px solid var(--line);background:transparent;color:var(--ink);font-size:1.3rem}
+.mood{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0}
+.mood button{padding:16px 10px;border:2px solid var(--line);background:var(--card);color:var(--ink);font-size:1.05rem}
+.mood button:hover{border-color:var(--gold)}
+#mres{display:none}#mres.show{display:block}
+#cnt{font:700 4rem Georgia,serif;color:var(--gold);line-height:1}
+.dh{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:14px 0}
+.dh button{padding:8px 14px;border:2px solid var(--line);background:transparent;color:var(--ink);border-radius:999px;cursor:pointer;font:inherit}
+.dh button[aria-pressed="true"]{background:var(--green);color:var(--onG);border-color:var(--green)}
+#tap{width:150px;height:150px;border-radius:50%;border:0;background:radial-gradient(circle at 35% 30%,var(--gold),var(--green));color:var(--onG);font:700 1.1rem inherit;cursor:pointer;box-shadow:0 14px 30px rgba(0,0,0,.25);transition:transform .1s}
+#tap:active{transform:scale(.93)}
+.br{display:grid;place-items:center;margin-top:24px}
+#orb{width:110px;height:110px;border-radius:50%;background:var(--green);opacity:.85;transition:transform 4s ease-in-out;display:grid;place-items:center;color:var(--onG);font-weight:700;text-align:center;font-size:.9rem}
+#orb.big{transform:scale(1.7)}
+#bt{margin-top:46px;min-height:3em;text-align:center;color:var(--mute)}
+textarea{width:100%;font:inherit;padding:12px;border:1px solid var(--line);border-radius:14px;background:var(--card);color:var(--ink);margin-bottom:10px}
+#gs,#ds{color:var(--green);font-weight:700;min-height:1.6em}
+.note{font-size:.85rem;color:var(--mute);margin-top:22px;text-align:center}
+nav{display:flex;justify-content:space-between;align-items:center;padding:10px 18px}
+nav .btn[disabled]{opacity:.35;cursor:default}
+@media (prefers-reduced-motion:reduce){.pg,#orb,#prog{transition:none}}
+</style>
+</head>
+<body>
+<header><span class="logo">Sukoon · سكون</span><div id="dots" role="tablist" aria-label="Pages"></div></header>
+<div class="bar"><div id="prog"></div></div>
+<main id="stage">
+
+<section class="pg" aria-label="Welcome"><div class="in" style="text-align:center">
+<p class="ar" style="font-size:2.2rem">السَّلَامُ عَلَيْكُمْ</p>
+<h2>As-salamu alaykum</h2>
+<p class="sub">How is your heart today? Choose one, and swipe through to find peace.</p>
+<div class="mood" id="mood"></div>
+<div id="mres" class="card"></div>
+</div></section>
+
+<section class="pg" aria-label="Quran verses"><div class="in"><h2>Words of the Quran</h2><p class="sub">Verses of comfort and hope.</p><div class="card" id="c-q"></div></div></section>
+
+<section class="pg" aria-label="Hadith"><div class="in"><h2>Hadith of hope</h2><p class="sub">Sayings of the Prophet ﷺ, with their sources. Meanings are given in English.</p><div class="card" id="c-h"></div></div></section>
+
+<section class="pg" aria-label="Dhikr"><div class="in" style="text-align:center"><h2>Dhikr corner</h2><p class="sub">Choose a phrase, then tap to count.</p>
+<div class="dh" id="dh"></div>
+<p class="ar" id="dar" style="text-align:center"></p>
+<div id="cnt">0</div><p class="sub" id="dmean"></p><p class="ur" id="dur" style="text-align:center"></p>
+<button id="tap">Tap</button><br><br><button class="btn alt" id="rs">Reset</button>
+<div class="br"><div id="orb">Ready</div><div id="bt">Slow breathing: breathe in with one dhikr, out with another.</div><button class="btn" id="bb">Start breathing</button></div>
+</div></section>
+
+<section class="pg" aria-label="Duas"><div class="in"><h2>Duas for the heart</h2><p class="sub">For worry, sorrow and thankfulness.</p><div class="card" id="c-d"></div></div></section>
+
+<section class="pg" aria-label="Gratitude journal"><div class="in"><h2>Gratitude journal</h2><p class="sub">Write three blessings you have today. They stay only on this device.</p>
+<textarea id="g1" rows="2" placeholder="Blessing 1" aria-label="Blessing 1"></textarea><textarea id="g2" rows="2" placeholder="Blessing 2" aria-label="Blessing 2"></textarea><textarea id="g3" rows="2" placeholder="Blessing 3" aria-label="Blessing 3"></textarea>
+<button class="btn" id="gb">Save</button> <span id="gs" role="status"></span>
+<p class="ar" style="text-align:center;font-size:1.6rem">لَئِن شَكَرْتُمْ لَأَزِيدَنَّكُمْ</p><p class="note" style="margin-top:0">“If you are grateful, I will surely give you more.” (Quran 14:7)</p><p class="ur" style="text-align:center">اگر تم شکر کرو گے تو میں تمہیں ضرور اور زیادہ دوں گا۔</p>
+</div></section>
+
+<section class="pg" aria-label="Stories"><div class="in"><h2>Stories of the Prophets</h2><p class="sub">Patience always leads to relief.</p><div class="card" id="c-s"></div></div></section>
+
+<section class="pg" aria-label="Daily action"><div class="in" style="text-align:center"><h2>One good deed today</h2><p class="sub">A small act can lift your heart and someone else’s.</p>
+<div class="card"><p id="da" style="font:600 1.4rem Georgia,serif;margin:0 0 16px"></p><button class="btn" id="db">Mark as done</button><p id="ds" role="status"></p><p class="sub" id="st"></p></div>
+<p class="note">If you feel persistently low or unsafe, please speak to a trusted person, a doctor, or a counselor. Please verify references with a qualified scholar.</p>
+</div></section>
+</main>
+<nav><button class="btn alt" id="bp">Previous</button><span id="pn" class="sub" style="margin:0"></span><button class="btn" id="bn">Next</button></nav>
+
+<script>
+var Q=[["لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا وُسْعَهَا","Allah does not burden a soul beyond what it can bear.","Quran 2:286","اللہ کسی جان پر اس کی طاقت سے زیادہ بوجھ نہیں ڈالتا۔"],
+["أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ","Truly, in the remembrance of Allah do hearts find rest.","Quran 13:28","سن لو! اللہ کے ذکر سے ہی دلوں کو اطمینان نصیب ہوتا ہے۔"],
+["فَإِنَّ مَعَ الْعُسْرِ يُسْرًا إِنَّ مَعَ الْعُسْرِ يُسْرًا","Indeed, with hardship comes ease. Indeed, with hardship comes ease.","Quran 94:5–6","بے شک مشکل کے ساتھ آسانی ہے۔ بے شک مشکل کے ساتھ آسانی ہے۔"],
+["لَا تَقْنَطُوا مِن رَّحْمَةِ اللَّهِ","Do not despair of the mercy of Allah.","Quran 39:53","اللہ کی رحمت سے مایوس نہ ہو جاؤ۔"],
+["وَمَن يَتَوَكَّلْ عَلَى اللَّهِ فَهُوَ حَسْبُهُ","Whoever relies on Allah, He is enough for them.","Quran 65:3","اور جو اللہ پر بھروسہ کرے تو وہ اسے کافی ہے۔"]];
+var H=[["","“Your smile in the face of your brother is charity.”","Jami at-Tirmidhi 1956","تمہارا اپنے بھائی کے سامنے مسکرانا صدقہ ہے۔"],
+["","The affair of the believer is wonderful. If good comes, they give thanks, and that is good for them. If hardship comes, they are patient, and that is good for them.","Sahih Muslim 2999","مومن کا معاملہ عجیب ہے، اس کا ہر معاملہ اس کے لیے بھلائی ہے۔ اگر اسے خوشی ملے تو شکر کرتا ہے، یہ اس کے لیے بہتر ہے، اور اگر تکلیف پہنچے تو صبر کرتا ہے، یہ بھی اس کے لیے بہتر ہے۔"],
+["لَا يُؤْمِنُ أَحَدُكُمْ حَتَّى يُحِبَّ لِأَخِيهِ مَا يُحِبُّ لِنَفْسِهِ","None of you truly believes until he loves for his brother what he loves for himself.","Sahih al-Bukhari 13, Sahih Muslim 45","تم میں سے کوئی اس وقت تک مومن نہیں ہو سکتا جب تک اپنے بھائی کے لیے وہی پسند نہ کرے جو اپنے لیے پسند کرتا ہے۔"]];
+var Du=[["اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ","Allahumma inni a‘udhu bika minal-hammi wal-hazan","O Allah, I seek refuge in You from worry and grief.","Sahih al-Bukhari 6369","اے اللہ! میں فکر اور غم سے تیری پناہ مانگتا ہوں۔"],
+["لَا إِلَٰهَ إِلَّا أَنتَ سُبْحَانَكَ إِنِّي كُنتُ مِنَ الظَّالِمِينَ","La ilaha illa anta subhanaka inni kuntu minaz-zalimin","There is no god but You, glory be to You. I was among the wrongdoers. (Dua of Yunus)","Quran 21:87","تیرے سوا کوئی معبود نہیں، تو پاک ہے، بے شک میں ظالموں میں سے تھا۔"],
+["رَبِّ إِنِّي لِمَا أَنزَلْتَ إِلَيَّ مِنْ خَيْرٍ فَقِيرٌ","Rabbi inni lima anzalta ilayya min khayrin faqir","My Lord, I am in need of whatever good You send down to me. (Dua of Musa)","Quran 28:24","اے میرے رب! تو جو بھلائی بھی میری طرف اتارے میں اس کا محتاج ہوں۔"],
+["الْحَمْدُ لِلَّهِ","Alhamdulillah","All praise belongs to Allah.","Quran 1:2","تمام تعریفیں اللہ کے لیے ہیں۔"]];
+var S=[["Yusuf (Joseph)","Thrown in a well, sold, and jailed, he stayed patient and trusted Allah, and later rose to honour and was reunited with his family.","Lesson: Allah’s plan is wiser than our worry. (Quran, Surah Yusuf)","یوسف علیہ السلام کو کنویں میں ڈالا گیا، بیچا گیا اور قید ہوئے، مگر صبر اور اللہ پر بھروسہ رکھا؛ آخر عزت ملی اور گھر والوں سے ملاقات ہوئی۔ سبق: اللہ کی تدبیر ہماری فکر سے بہتر ہے۔"],
+["Ayyub (Job)","He suffered long illness and loss, yet kept saying he turned to his Lord, and Allah healed him and restored his blessings.","Lesson: patience and sincere dua are never wasted. (Quran 21:83–84)","ایوب علیہ السلام نے طویل بیماری اور نقصان میں صبر کیا اور اپنے رب کو پکارا، اللہ نے شفا دی اور نعمتیں لوٹا دیں۔ سبق: صبر اور خلوص سے کی گئی دعا ضائع نہیں جاتی۔"],
+["Yunus (Jonah)","In the darkness of the whale’s belly he called on Allah with humility, and was saved.","Lesson: no situation is too dark for a sincere call. (Quran 21:87–88)","یونس علیہ السلام نے مچھلی کے پیٹ کے اندھیروں میں عاجزی سے اللہ کو پکارا اور نجات پائی۔ سبق: کوئی اندھیرا اتنا گہرا نہیں کہ سچی پکار نہ پہنچے۔"],
+["Maryam (Mary)","Alone and in pain, she was given water and food and reassurance from Allah.","Lesson: Allah provides in ways we do not expect. (Quran 19:22–26)","مریم علیہا السلام تنہائی اور تکلیف میں تھیں، اللہ نے انہیں پانی، کھجور اور تسلی عطا کی۔ سبق: اللہ ایسے راستوں سے رزق دیتا ہے جن کا ہمیں گمان بھی نہیں ہوتا۔"]];
+var M={sad:["حُزْنٌ","Sad","فَإِنَّ مَعَ الْعُسْرِ يُسْرًا","With hardship comes ease. Your pain is seen, and relief is coming.","Quran 94:5","مشکل کے ساتھ آسانی ہے۔ آپ کا دکھ دیکھا جا رہا ہے اور آسانی آنے والی ہے۔"],
+anx:["قلق","Anxious","أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ","Hearts find rest in remembering Allah. Try the dhikr page and slow breathing.","Quran 13:28","اللہ کے ذکر سے دلوں کو سکون ملتا ہے۔ ذکر اور آہستہ سانس والا صفحہ آزمائیں۔"],
+tir:["","Tired","لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا وُسْعَهَا","Allah asks only what you can bear. Rest is not weakness.","Quran 2:286","اللہ صرف اتنا ہی بوجھ ڈالتا ہے جتنی طاقت ہو۔ آرام کمزوری نہیں ہے۔"],
+gra:["","Grateful","لَئِن شَكَرْتُمْ لَأَزِيدَنَّكُمْ","Gratitude brings more blessing. Write your three blessings in the journal.","Quran 14:7","شکر کرنے سے نعمت بڑھتی ہے۔ جرنل میں اپنی تین نعمتیں لکھیں۔"]};
+var A=["Call a relative you haven’t spoken to lately.","Give a little in charity, even a small amount.","Smile at three people today.","Pray two extra rakah in a quiet moment.","Send a kind message to a friend.","Say Alhamdulillah for five things, out loud.","Help someone with a small task."];
+function ld(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}}
+function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+function esc(s){return s}
+/* slider */
+var P=document.querySelectorAll(".pg"),c=0,dots=document.getElementById("dots");
+P.forEach(function(_,i){var b=document.createElement("button");b.setAttribute("aria-label","Page "+(i+1));b.onclick=function(){go(i)};dots.appendChild(b)});
+function go(i){document.body.classList.add("ready");c=Math.max(0,Math.min(P.length-1,i));P.forEach(function(p,j){p.className="pg"+(j===c?" cur":j<c?" prev":"");p.inert=j!==c;if(j===c)p.scrollTop=0});
+[].forEach.call(dots.children,function(d,j){d.className=j===c?"on":""});
+document.getElementById("prog").style.width=((c+1)/P.length*100)+"%";document.getElementById("pn").textContent=(c+1)+" / "+P.length;
+document.getElementById("bp").disabled=c===0;document.getElementById("bn").disabled=c===P.length-1;sv("sk_page",c)}
+document.getElementById("bn").onclick=function(){go(c+1)};document.getElementById("bp").onclick=function(){go(c-1)};
+addEventListener("keydown",function(e){if(/TEXTAREA|INPUT/.test(document.activeElement.tagName))return;if(e.key==="ArrowRight")go(c+1);if(e.key==="ArrowLeft")go(c-1)});
+var tx=0,ty=0,st=document.getElementById("stage");
+st.addEventListener("touchstart",function(e){tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});
+st.addEventListener("touchend",function(e){var dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5)go(dx<0?c+1:c-1)});
+/* mini carousels */
+function sub(id,data,fmt){var el=document.getElementById(id),k=0;function r(){el.innerHTML=fmt(data[k])+'<div class="nv"><button aria-label="Previous">‹</button><span>'+(k+1)+" / "+data.length+'</span><button aria-label="Next">›</button></div>';var b=el.querySelectorAll(".nv button");b[0].onclick=function(){k=(k-1+data.length)%data.length;r()};b[1].onclick=function(){k=(k+1)%data.length;r()}}r()}
+sub("c-q",Q,function(d){return'<p class="ar">'+d[0]+'</p><p>'+d[1]+'</p><p class="ur">'+d[3]+'</p><p class="ref">'+d[2]+'</p>'});
+sub("c-h",H,function(d){return(d[0]?'<p class="ar" style="font-size:1.6rem">'+d[0]+'</p>':'')+'<p>'+d[1]+'</p><p class="ur">'+d[3]+'</p><p class="ref">'+d[2]+'</p>'});
+sub("c-d",Du,function(d){return'<p class="ar">'+d[0]+'</p><p class="tr">'+d[1]+'</p><p>'+d[2]+'</p><p class="ur">'+d[4]+'</p><p class="ref">'+d[3]+'</p><button class="btn alt cp" data-t="'+d[0]+' — '+d[1]+' — '+d[2]+'">Copy</button>'});
+document.getElementById("c-d").addEventListener("click",function(e){if(e.target.classList.contains("cp")){try{navigator.clipboard.writeText(e.target.dataset.t);e.target.textContent="Copied"}catch(x){e.target.textContent="Copy not available"}}});
+sub("c-s",S,function(d){return'<h3 style="font-family:Georgia,serif;font-size:1.4rem;margin:0 0 8px;color:var(--gold)">'+d[0]+'</h3><p>'+d[1]+'</p><p class="ur">'+d[3]+'</p><p class="ref">'+d[2]+'</p>'});
+/* mood */
+var mb=document.getElementById("mood"),mr=document.getElementById("mres");
+[["sad","😔 Sad"],["anx","😟 Anxious"],["tir","😮‍💨 Tired"],["gra","😊 Grateful"]].forEach(function(m){var b=document.createElement("button");b.textContent=m[1];b.onclick=function(){var d=M[m[0]];mr.className="card show";mr.innerHTML='<p class="ar">'+d[2]+'</p><p>'+d[3]+'</p><p class="ur">'+d[5]+'</p><p class="ref">'+d[4]+'</p><button class="btn" id="mn">Continue</button>';document.getElementById("mn").onclick=function(){go(1)}};mb.appendChild(b)});
+/* dhikr */
+var DK=[["سُبْحَانَ اللَّهِ","SubhanAllah: glory be to Allah"],["الْحَمْدُ لِلَّهِ","Alhamdulillah: all praise is for Allah"],["اللَّهُ أَكْبَرُ","Allahu Akbar: Allah is the Greatest"],["لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ","La hawla wa la quwwata illa billah: there is no power or strength except with Allah"]],di=0,n=0,DU=["اللہ پاک ہے۔","تمام تعریفیں اللہ کے لیے ہیں۔","اللہ سب سے بڑا ہے۔","نہ گناہ سے بچنے کی طاقت ہے اور نہ نیکی کی قوت، مگر اللہ کی مدد سے۔"];
+var dh=document.getElementById("dh");
+DK.forEach(function(d,i){var b=document.createElement("button");b.textContent=d[1].split(":")[0];b.setAttribute("aria-pressed",i===0);b.onclick=function(){di=i;n=0;pick()};dh.appendChild(b)});
+function pick(){[].forEach.call(dh.children,function(b,j){b.setAttribute("aria-pressed",j===di)});document.getElementById("dar").textContent=DK[di][0];document.getElementById("dmean").textContent=DK[di][1].split(": ")[1]||"";document.getElementById("dur").textContent=DU[di];document.getElementById("cnt").textContent=n}
+pick();
+document.getElementById("tap").onclick=function(){n++;document.getElementById("cnt").textContent=n;if(navigator.vibrate)try{navigator.vibrate(15)}catch(e){}};
+document.getElementById("rs").onclick=function(){n=0;pick()};
+var bi=null,orb=document.getElementById("orb"),bt=document.getElementById("bt"),bb=document.getElementById("bb"),ph=0;
+function step(){ph=1-ph;orb.classList.toggle("big",ph===1);orb.textContent=ph?"In":"Out";bt.textContent=ph?"Breathe in… SubhanAllah":"Breathe out… Alhamdulillah"}
+bb.onclick=function(){if(bi){clearInterval(bi);bi=null;bb.textContent="Start breathing";orb.classList.remove("big");orb.textContent="Ready";ph=0}else{ph=0;step();bi=setInterval(step,4000);bb.textContent="Stop"}};
+/* journal */
+var g=ld("sk_g")||[];["g1","g2","g3"].forEach(function(id,i){document.getElementById(id).value=g[i]||""});
+document.getElementById("gb").onclick=function(){sv("sk_g",["g1","g2","g3"].map(function(id){return document.getElementById(id).value}));document.getElementById("gs").textContent="Saved. Alhamdulillah."};
+/* daily */
+var now=new Date(),key=now.toISOString().slice(0,10),y=new Date(now-864e5).toISOString().slice(0,10);
+document.getElementById("da").textContent=A[Math.floor(now/864e5)%A.length];
+var s=ld("sk_s")||{last:"",n:0};
+function stt(){document.getElementById("st").textContent=s.n?"Streak: "+s.n+" day"+(s.n>1?"s":""):"Start your streak today.";if(s.last===key)document.getElementById("ds").textContent="Done for today. Jazakallahu khayran."}
+document.getElementById("db").onclick=function(){if(s.last!==key){s={last:key,n:s.last===y?s.n+1:1};sv("sk_s",s)}stt()};
+stt();
+go(Math.min(ld("sk_page")||0,P.length-1));
+</script>
+</body>
+</html>
